@@ -1,0 +1,41 @@
+package scalar
+
+func SetScriptLocation(scriptLocation string) string{
+	if scriptLocation != "" {
+		return `<script src="` + scriptLocation + `"></script>`
+	} else {
+		return `<script src="https://cdn.jsdelivr.net/npm/@scalar/api-reference"></script>`
+	}
+}
+
+func SetSpecURL(contentLocation string) string{
+		if contentLocation == "" {
+			return `<script
+			id="api-reference"
+			data-url="https://cdn.jsdelivr.net/npm/@scalar/galaxy/dist/latest.yaml"></script>`
+		}
+		return `<script
+			id="api-reference"
+			data-url="` + contentLocation + `"></script>`
+
+}
+
+templ APIReferenceee(props OptionsProp) {
+	<!doctype html>
+	<html>
+	<head>
+		<title>{ props.PageTitle }</title>
+		<meta charset="utf-8" />
+		<meta
+		name="viewport"
+		content="width=device-width, initial-scale=1" />
+		if props.CustomCss != "" {
+			<style>{ props.CustomCss }</style>
+		}
+	</head>
+	<body>
+		@templ.Raw(SetSpecURL(props.SpecURL))
+		@templ.Raw(SetScriptLocation(props.CDN))
+	</body>
+	</html>
+}
