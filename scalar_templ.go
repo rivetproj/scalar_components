@@ -17,6 +17,11 @@ func SetScriptLocation(scriptLocation string) string {
 }
 
 func SetSpecURL(contentLocation string) string {
+	if contentLocation == "" {
+		return `<script
+			id="api-reference"
+			data-url="https://cdn.jsdelivr.net/npm/@scalar/galaxy/dist/latest.yaml"></script>`
+	}
 	return `<script
 			id="api-reference"
 			data-url="` + contentLocation + `"></script>`
@@ -51,13 +56,23 @@ func APIReferenceee(props OptionsProp) templ.Component {
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(props.PageTitle)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `scalar.templ`, Line: 22, Col: 26}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `scalar.templ`, Line: 27, Col: 26}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</title><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><style>{ options.customThemeCss }</style></head><body>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</title><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		if props.CustomCss != "" {
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<style>{ props.CustomCss }</style>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</head><body>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
